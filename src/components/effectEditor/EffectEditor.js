@@ -1,4 +1,4 @@
-
+import { ImageEffectProvider } from './context/effect.context';
 
 function EffectEditor(){
     return(

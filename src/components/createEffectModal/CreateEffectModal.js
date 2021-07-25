@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useHistory } from "react-router-dom";
 import { useImageEffect } from '../../context/effect.context';
 import MultiSelect from "react-multi-select-component";
 
@@ -17,15 +18,31 @@ const options = [
   ];
 
 function CreateEffectModal() {
-    const {effectState, setEffectState} = useImageEffect();
     const [selectedEffects, setSelectedEffect] = useState([]);
+    const history = useHistory();
+    const {effectState, setEffectState} = useImageEffect();
+
+
+    const handleEffectCreation = () => {
+        setEffectState({
+            ...effectState,
+            effects: selectedEffects,
+            showEffectModal: false,
+        });
+        history.push('/create-effect')
+    }
+
+    const handleEffectModalClose = () => {
+        setEffectState({
+            ...effectState,
+            showEffectModal: false
+        })
+    }
     
-    if(!effectState.showEffectModal) return;
+    if(!effectState.showEffectModal) return null;
 
-    const domNode = document.querySelector('body');
-
-    return ReactDOM.createPortal(
-        <div className="modal">
+    return(
+        <div className="modal modal-lg d-block modal--centered">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
@@ -37,13 +54,14 @@ function CreateEffectModal() {
                         className='btn-close' 
                         data-bs-dismiss='modal'
                         aria-label='Close'
+                        onClick={handleEffectModalClose}
                         />
                     </div>
                     <div className="modal-body">
                         <MultiSelect
                             options={options}
-                            value={selected}
-                            onChange={setSelected}
+                            value={selectedEffects}
+                            onChange={setSelectedEffect}
                             labelledBy="Select"
                         />
                     </div>
@@ -51,21 +69,22 @@ function CreateEffectModal() {
                         <button 
                             type='button'
                             className="btn btn-secondary"
-                            data-bs-dismiss='modal'
+                            onClick={handleEffectModalClose}
                         >
                             close
                         </button>
                         <button 
                             type='button'
                             className="btn btn-primary"
+                            onClick={handleEffectCreation}
+                            disabled={!selectedEffects.length}
                         >
                             create
                         </button>
                     </div>
                 </div>
             </div>
-        </div>,
-        domNode
+        </div>
     )
 }
 

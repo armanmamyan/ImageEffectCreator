@@ -11,12 +11,12 @@ function App() {
   return (
     <ImageEffectProvider>
       <Router>
+        <Header/>
         <Switch>
-          <Header/>
-          <Route exact path='/' component={Dashboard} />
-          <Route path='/createEffect' component={EffectEditor} />
-          <CreateEffectModal/>
+          <Route path='/create-effect' component={EffectEditor} />
+          <Route exact path='/' component={Dashboard}/>
         </Switch>
+        <CreateEffectModal/>
       </Router>
     </ImageEffectProvider>
   );
