@@ -1,10 +1,16 @@
 
+import { useImageEffect } from '../../context/effect.context';
 import './index.scss';
 
 function Header() {
+    const {effectState, setEffectState} = useImageEffect();
+    console.log(effectState);
     
     const handleButtonClick = (e) => {
-        console.log(e);
+        setEffectState({
+            ...effectState,
+            showEffectModal: true,
+        })    
     }
 
     return(
