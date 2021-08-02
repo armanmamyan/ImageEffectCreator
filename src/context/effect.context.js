@@ -5,6 +5,7 @@ const ImageEffectContext = createContext(null);
 const initialState = {
     showEffectModal: false,
     effects: [],
+    collection: [],
 }
 
 export const ImageEffectProvider = ({children}) => {
