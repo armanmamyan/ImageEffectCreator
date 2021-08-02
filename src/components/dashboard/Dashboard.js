@@ -8,10 +8,12 @@ function Dashboard() {
 
     const [collections, setCollections] = useState(collection || []);
 
-
     useEffect(() => {
-        setCollections(JSON.parse(window.localStorage.getItem('effectCollection')))
-    },[]);
+        const findLocalStorageItems = JSON.parse(
+          window.localStorage.getItem("effectCollection")
+        );
+        findLocalStorageItems && setCollections(findLocalStorageItems);
+      }, []);
 
     useEffect(() => {
         setEffectState({
